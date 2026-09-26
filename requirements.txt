@@ -1,0 +1,9 @@
+# RecForge 运行时依赖（锁定版本见 requirements.lock.txt）
+numpy>=1.24
+scipy>=1.10
+scikit-learn>=1.5.0
+implicit>=0.7
+# 可选（缺省自动降级）：
+# pandas        —— MovieLens 真实基准载入
+# optuna        —— 超参自动调优
+# 开发/CI：pytest, ruff

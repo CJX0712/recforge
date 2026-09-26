@@ -1,0 +1,87 @@
+{
+  "seed": 42,
+  "dataset": "synthetic",
+  "n_users": 500,
+  "n_items": 200,
+  "n_train": 7500,
+  "n_test": 500,
+  "k_list": [
+    5,
+    10,
+    20
+  ],
+  "rows": [
+    {
+      "model": "ALS-implicit",
+      "backend": "implicit",
+      "metrics": {
+        "recall@5": 0.022,
+        "recall@10": 0.044,
+        "recall@20": 0.082,
+        "ndcg@5": 0.01439333008452144,
+        "hr@5": 0.022,
+        "ndcg@10": 0.02163519503262445,
+        "hr@10": 0.044,
+        "ndcg@20": 0.030788087032344105,
+        "hr@20": 0.082,
+        "users": 500.0,
+        "overall_hit_rate": 0.082
+      },
+      "train_sec": 0.05936120000114897,
+      "available": true,
+      "note": ""
+    },
+    {
+      "model": "MostPopular",
+      "backend": "baseline",
+      "metrics": {
+        "recall@5": 0.0,
+        "recall@10": 0.002,
+        "recall@20": 0.006,
+        "ndcg@5": 0.0,
+        "hr@5": 0.0,
+        "ndcg@10": 0.0006309297535714575,
+        "hr@10": 0.002,
+        "ndcg@20": 0.0016105546867077206,
+        "hr@20": 0.006,
+        "users": 500.0,
+        "overall_hit_rate": 0.006
+      },
+      "train_sec": 0.003642399999080226,
+      "available": true,
+      "note": ""
+    },
+    {
+      "model": "Random",
+      "backend": "baseline",
+      "metrics": {
+        "recall@5": 0.018,
+        "recall@10": 0.042,
+        "recall@20": 0.094,
+        "ndcg@5": 0.008991740695635117,
+        "hr@5": 0.018,
+        "ndcg@10": 0.01668661593801494,
+        "hr@10": 0.042,
+        "ndcg@20": 0.029582457785245403,
+        "hr@20": 0.094,
+        "users": 500.0,
+        "overall_hit_rate": 0.094
+      },
+      "train_sec": 0.0010028000033344142,
+      "available": true,
+      "note": ""
+    }
+  ],
+  "ablation": {
+    "full_recall@10": 0.038,
+    "shuffled_recall@10": 0.02,
+    "drop_ratio": 0.4737
+  },
+  "failures": [
+    "冷启动物品：1 个 held-out 物品从未在 train 出现，任何模型都无法召回（结构性盲区，需内容/side-info 缓解）。",
+    "低活跃用户：本合成集无 train 历史 <=3 条的用户（最少 6 条），该失效模式未凸显；真实长尾稀疏场景会更显著。",
+    "热门误召回：MostPopular 对所有用户返回相同热门 Top-K，recall@10=0.0020，对冷门兴趣用户系统性失效（本系统相对提升即源于此）。",
+    "长尾覆盖：train 覆盖 199/200 个物品，未覆盖物品在 test 中一旦被留一即必漏。",
+    "热门集中度：top-10 物品占 train 交互的 7.8%，长尾越重，简单热门基线越易虚高，越需协同过滤。"
+  ]
+}

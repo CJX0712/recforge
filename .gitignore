@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.env
+
+# 虚拟环境
+envs/
+venv/
+
+# 运行产物（benchmark.json 为可信基线交付物，保留入库）
+
+# 数据集（可选下载）
+ml-100k/
+*.zip
+
+# 编辑器
+.idea/
+.vscode/
+*.swp
+.DS_Store
