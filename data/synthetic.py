@@ -5,6 +5,7 @@ data/synthetic.py · 合成隐式反馈生成器（planted 潜因子）
 planted 结构保证协同过滤信号存在 → ALS 必显著胜出 popularity 基线。
 固定 seed 完全可复现（numpy Generator）。
 """
+
 from __future__ import annotations
 
 import numpy as np
@@ -85,9 +86,7 @@ class SyntheticRatings:
             Rating(user_id=int(flat // self.n_items), item_id=int(flat % self.n_items), value=1.0)
             for flat in chosen
         ]
-        return InteractionDataset(
-            n_users=self.n_users, n_items=self.n_items, ratings=ratings
-        )
+        return InteractionDataset(n_users=self.n_users, n_items=self.n_items, ratings=ratings)
 
     def ground_truth_affinity(self) -> np.ndarray:
         """返回 planted affinity 矩阵（仅供分析/失败案例用）。"""
