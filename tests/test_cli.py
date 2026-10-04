@@ -1,4 +1,5 @@
 """CLI 冒烟测试。作者：晨星"""
+
 import json
 import os
 import tempfile
@@ -9,13 +10,31 @@ from cli import main
 def test_cli_smoke():
     tmp = tempfile.mktemp(suffix=".json")
     try:
-        rc = main([
-            "--dataset", "synthetic",
-            "--n-users", "80", "--n-items", "40", "--n-ratings", "700",
-            "--backend", "numpy",
-            "--factors", "16", "--iterations", "8",
-            "--k", "5,10", "--seed", "42", "--out", tmp, "--quiet",
-        ])
+        rc = main(
+            [
+                "--dataset",
+                "synthetic",
+                "--n-users",
+                "80",
+                "--n-items",
+                "40",
+                "--n-ratings",
+                "700",
+                "--backend",
+                "numpy",
+                "--factors",
+                "16",
+                "--iterations",
+                "8",
+                "--k",
+                "5,10",
+                "--seed",
+                "42",
+                "--out",
+                tmp,
+                "--quiet",
+            ]
+        )
         assert rc == 0
         assert os.path.exists(tmp)
         with open(tmp, encoding="utf-8") as f:
