@@ -1,4 +1,5 @@
 """配置校验测试。作者：晨星"""
+
 import pytest
 
 from core.config import ENV_PREFIX, load_config
