@@ -3,6 +3,7 @@ recommenders/factory.py · 模型工厂与可用性探测
 作者：晨星
 backend='auto'：优先 implicit，缺失则降级 numpy（离线兜底）。
 """
+
 from __future__ import annotations
 
 from core.config import Config
@@ -25,17 +26,26 @@ def build_recommender(name: str, cfg: Config) -> object:
     if name in ("implicit_als", "als"):
         if backend == "implicit":
             return ImplicitALSRecommender(
-                factors=cfg.factors, reg=cfg.reg, iterations=cfg.iterations,
-                alpha=40.0, seed=cfg.seed,
+                factors=cfg.factors,
+                reg=cfg.reg,
+                iterations=cfg.iterations,
+                alpha=40.0,
+                seed=cfg.seed,
             )
         return NumpyALSRecommender(
-            factors=cfg.factors, reg=cfg.reg, iterations=cfg.iterations,
-            alpha=cfg.alpha, seed=cfg.seed,
+            factors=cfg.factors,
+            reg=cfg.reg,
+            iterations=cfg.iterations,
+            alpha=cfg.alpha,
+            seed=cfg.seed,
         )
     if name == "numpy_als":
         return NumpyALSRecommender(
-            factors=cfg.factors, reg=cfg.reg, iterations=cfg.iterations,
-            alpha=cfg.alpha, seed=cfg.seed,
+            factors=cfg.factors,
+            reg=cfg.reg,
+            iterations=cfg.iterations,
+            alpha=cfg.alpha,
+            seed=cfg.seed,
         )
     raise ModelError(f"未知模型: {name}")
 
