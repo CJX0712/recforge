@@ -7,6 +7,7 @@ cli.py · RecForge 命令行入口
   python cli.py --dataset movielens      # 可选真实基准（需网络）
   python cli.py --out results.json --quiet
 """
+
 from __future__ import annotations
 
 import argparse
