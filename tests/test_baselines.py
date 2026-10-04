@@ -1,12 +1,12 @@
 """基线推荐有效性测试。作者：晨星"""
+
 from data.synthetic import SyntheticRatings
 from preprocess.split import LeaveOneOutSplitter
 from recommenders.baselines import MostPopularRecommender, RandomRecommender
 
 
 def _split():
-    ds = SyntheticRatings(seed=8, n_users=50, n_items=25, n_ratings=400,
-                          min_interactions=3).generate()
+    ds = SyntheticRatings(seed=8, n_users=50, n_items=25, n_ratings=400, min_interactions=3).generate()
     return LeaveOneOutSplitter().split(ds, seed=8)
 
 
