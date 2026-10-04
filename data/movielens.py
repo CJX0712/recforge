@@ -3,6 +3,7 @@ data/movielens.py · 可选 MovieLens-100k 载入（需网络/本地文件）
 作者：晨星
 默认 demo 用合成数据，保证离线可复现；MovieLens 为可选真实基准。
 """
+
 from __future__ import annotations
 
 import os
@@ -50,7 +51,9 @@ class MovieLensSource:
 
         u_data = self._ensure()
         df = pd.read_csv(
-            u_data, sep="\t", header=None,
+            u_data,
+            sep="\t",
+            header=None,
             names=["user", "item", "rating", "ts"],
         )
         # 重映射为连续 id
@@ -66,9 +69,7 @@ class MovieLensSource:
         ]
         # 仅保留正反馈
         ratings = [r for r in ratings if r.value > 0]
-        return InteractionDataset(
-            n_users=len(u_map), n_items=len(i_map), ratings=ratings
-        )
+        return InteractionDataset(n_users=len(u_map), n_items=len(i_map), ratings=ratings)
 
     def generate(self) -> InteractionDataset:
         return self.load(self.path)
