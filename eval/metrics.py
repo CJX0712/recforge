@@ -4,6 +4,7 @@ eval/metrics.py · Top-K 排序指标（手写，避免 sklearn 别名递归坑�
 约定：分数越大越推荐；recall/ndcg/hr 越大越好。
 relevant：用户真正感兴趣的 item 集合（本系统为 held-out item）。
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
