@@ -87,7 +87,7 @@ class RecPipeline:
         # 系统模型（SOTA 后端 implicit / 兜底 numpy）
         try:
             sys_model = build_recommender("implicit_als", cfg)
-        except PipelineError as e:
+        except PipelineError:
             sys_model = build_recommender("numpy_als", cfg)
         fitted, sec, err = train_model(sys_model, split.train)
         if err is None:
