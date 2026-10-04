@@ -3,6 +3,7 @@ core/types.py · 跨模块统一数据类型
 作者：晨星
 约定：分数越大越推荐；指标越小越好者单独标注（如 sMAPE）。
 """
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
