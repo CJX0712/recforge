@@ -5,6 +5,7 @@ recommenders/baselines.py · 强基线（打假用）
 - RandomRecommender：随机召回，作为下界 sanity check。
 （ItemAverage 在隐式反馈下等价于 MostPopular，故不单列，见 model_card。）
 """
+
 from __future__ import annotations
 
 import numpy as np
