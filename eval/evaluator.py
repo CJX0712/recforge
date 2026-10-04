@@ -3,6 +3,7 @@ eval/evaluator.py · 评测器（leave-one-out 协议）
 作者：晨星
 对每个 test 用户：exclude 其 train 物品 → 取 max(k) 推荐 → 在各级 k 上算指标 → 跨用户平均。
 """
+
 from __future__ import annotations
 
 import numpy as np
@@ -14,9 +15,7 @@ from .metrics import hr_at_k, ndcg_at_k, recall_at_k
 
 
 class Evaluator:
-    def evaluate(
-        self, recommender, split: SplitResult, k_list: list[int]
-    ) -> dict[str, float]:
+    def evaluate(self, recommender, split: SplitResult, k_list: list[int]) -> dict[str, float]:
         if not k_list:
             raise EvalError("k_list 为空")
         max_k = max(k_list)
