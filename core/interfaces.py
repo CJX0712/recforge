@@ -3,6 +3,7 @@ core/interfaces.py · 模块间统一 Protocol 接口
 作者：晨星
 单向无环：cli → pipeline → {data, hpo, training, domain, eval} → core
 """
+
 from __future__ import annotations
 
 from typing import Protocol, runtime_checkable
