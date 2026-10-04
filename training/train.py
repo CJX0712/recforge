@@ -2,6 +2,7 @@
 training/train.py · 训练封装（计时 + 异常隔离）
 作者：晨星
 """
+
 from __future__ import annotations
 
 import time
