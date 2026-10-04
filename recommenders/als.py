@@ -5,6 +5,7 @@ recommenders/als.py · ALS 矩阵分解（隐式反馈）
 - NumpyALSRecommender：Tier-1 离线兜底，纯 numpy 加权 ALS，零下载、可逐位复现。
 统一接口：fit / recommend / predict；分数越大越推荐。
 """
+
 from __future__ import annotations
 
 import os
@@ -33,8 +34,9 @@ class ImplicitALSRecommender:
     name = "ALS-implicit"
     backend = "implicit"
 
-    def __init__(self, factors: int = 32, reg: float = 0.1, iterations: int = 15,
-                 alpha: float = 40.0, seed: int = 42):
+    def __init__(
+        self, factors: int = 32, reg: float = 0.1, iterations: int = 15, alpha: float = 40.0, seed: int = 42
+    ):
         self.factors = int(factors)
         self.reg = float(reg)
         self.iterations = int(iterations)
@@ -91,8 +93,9 @@ class NumpyALSRecommender:
     name = "ALS-numpy"
     backend = "numpy"
 
-    def __init__(self, factors: int = 32, reg: float = 0.1, iterations: int = 15,
-                 alpha: float = 1.0, seed: int = 42):
+    def __init__(
+        self, factors: int = 32, reg: float = 0.1, iterations: int = 15, alpha: float = 1.0, seed: int = 42
+    ):
         self.factors = int(factors)
         self.reg = float(reg)
         self.iterations = int(iterations)
