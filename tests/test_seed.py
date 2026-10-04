@@ -1,4 +1,5 @@
 """确定性入口测试。作者：晨星"""
+
 import numpy as np
 
 from core.seed import set_all
