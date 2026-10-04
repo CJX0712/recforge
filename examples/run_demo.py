@@ -4,6 +4,7 @@ examples/run_demo.py · 端到端演示（落盘 benchmark.json）
 默认：合成数据 + auto 后端（implicit 可用则用 SOTA，否则降级 numpy），固定 seed 可复现。
 运行：python examples/run_demo.py
 """
+
 from __future__ import annotations
 
 import os
