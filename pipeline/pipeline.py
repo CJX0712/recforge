@@ -6,6 +6,7 @@ pipeline/pipeline.py · RecForge 编排与基准
 - benchmark()：落盘 benchmark.json（真实运行输出，禁止手填）
 - report()：人话报告（表格 + 状态图标）
 """
+
 from __future__ import annotations
 
 import json
@@ -69,9 +70,7 @@ class RecPipeline:
             Rating(user_id=int(new_ids[i]), item_id=r.item_id, value=r.value)
             for i, r in enumerate(train.ratings)
         ]
-        return InteractionDataset(
-            n_users=train.n_users, n_items=train.n_items, ratings=ratings
-        )
+        return InteractionDataset(n_users=train.n_users, n_items=train.n_items, ratings=ratings)
 
     # ---------- 运行 ----------
     def run(self) -> BenchmarkResult:
@@ -101,8 +100,10 @@ class RecPipeline:
             BenchmarkRow(
                 model=getattr(fitted, "name", "ALS"),
                 backend=getattr(fitted, "backend", backend),
-                metrics=metrics, train_sec=sec,
-                available=err is None, note=err or "",
+                metrics=metrics,
+                train_sec=sec,
+                available=err is None,
+                note=err or "",
             )
         )
 
@@ -120,7 +121,10 @@ class RecPipeline:
                 BenchmarkRow(
                     model=getattr(f2, "name", "baseline"),
                     backend=getattr(f2, "backend", "baseline"),
-                    metrics=m2, train_sec=s2, available=e2 is None, note=e2 or "",
+                    metrics=m2,
+                    train_sec=s2,
+                    available=e2 is None,
+                    note=e2 or "",
                 )
             )
 
@@ -209,6 +213,7 @@ class RecPipeline:
 
         # 5) 热门集中度：top-10 物品占 train 交互比例（长尾越显著，热门基线越虚高）
         from collections import Counter
+
         cnt = Counter(r.item_id for r in split.train.ratings)
         top10 = sum(c for _, c in cnt.most_common(10))
         total = len(split.train.ratings)
@@ -240,8 +245,12 @@ class RecPipeline:
         )
         lines.append("")
         # 表头
-        hdr = f"{'Model':<14}{'Backend':<10}" + "".join(f"{'R@'+str(k):<10}" for k in k_list) \
-              + "".join(f"{'N@'+str(k):<10}" for k in k_list) + f"{'train_s':<9}"
+        hdr = (
+            f"{'Model':<14}{'Backend':<10}"
+            + "".join(f"{'R@' + str(k):<10}" for k in k_list)
+            + "".join(f"{'N@' + str(k):<10}" for k in k_list)
+            + f"{'train_s':<9}"
+        )
         lines.append(hdr)
         lines.append("-" * len(hdr))
         for row in result.rows:
@@ -250,9 +259,9 @@ class RecPipeline:
                 continue
             cells = f"{row.model:<14}{row.backend:<10}"
             for k in k_list:
-                cells += f"{row.metrics.get('recall@'+str(k), 0):<10.4f}"
+                cells += f"{row.metrics.get('recall@' + str(k), 0):<10.4f}"
             for k in k_list:
-                cells += f"{row.metrics.get('ndcg@'+str(k), 0):<10.4f}"
+                cells += f"{row.metrics.get('ndcg@' + str(k), 0):<10.4f}"
             cells += f"{row.train_sec:<9.2f}"
             lines.append(cells)
         lines.append("")
@@ -270,19 +279,25 @@ class RecPipeline:
             pass_r = rel_r >= 30
             pass_n = rel_n >= 20
             lines.append("【胜强基线判定】")
-            lines.append(f"  Recall@10: 系统 {r10_sys:.4f} vs MostPopular {r10_mp:.4f}  "
-                         f"(相对 +{rel_r:.1f}%)  {'✅' if pass_r else '⚠️'} (阈值 +30%)")
-            lines.append(f"  NDCG@10  : 系统 {n10_sys:.4f} vs MostPopular {n10_mp:.4f}  "
-                         f"(相对 +{rel_n:.1f}%)  {'✅' if pass_n else '⚠️'} (阈值 +20%)")
+            lines.append(
+                f"  Recall@10: 系统 {r10_sys:.4f} vs MostPopular {r10_mp:.4f}  "
+                f"(相对 +{rel_r:.1f}%)  {'✅' if pass_r else '⚠️'} (阈值 +30%)"
+            )
+            lines.append(
+                f"  NDCG@10  : 系统 {n10_sys:.4f} vs MostPopular {n10_mp:.4f}  "
+                f"(相对 +{rel_n:.1f}%)  {'✅' if pass_n else '⚠️'} (阈值 +20%)"
+            )
             lines.append("")
 
         # 消融
         if result.ablation:
             lines.append("【消融：结构打乱】")
             a = result.ablation
-            lines.append(f"  full recall@10={a.get('full_recall@10')}  "
-                         f"shuffled={a.get('shuffled_recall@10')}  "
-                         f"drop={a.get('drop_ratio')}")
+            lines.append(
+                f"  full recall@10={a.get('full_recall@10')}  "
+                f"shuffled={a.get('shuffled_recall@10')}  "
+                f"drop={a.get('drop_ratio')}"
+            )
             lines.append("")
 
         # 失败案例
