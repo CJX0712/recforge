@@ -5,6 +5,7 @@ preprocess/split.py · Leave-One-Out 切分（无泄漏）
 保证 train 仅用于 fit；test 仅用于评测，绝不与 train 交换信息。
 确定性：依赖 ratings 的插入顺序（由生成器固定），无需额外随机源。
 """
+
 from __future__ import annotations
 
 from collections import OrderedDict
@@ -42,12 +43,8 @@ class LeaveOneOutSplitter:
         if not test_ratings:
             raise DataError("切分后 test 为空")
 
-        train = InteractionDataset(
-            n_users=dataset.n_users, n_items=dataset.n_items, ratings=train_ratings
-        )
-        test = InteractionDataset(
-            n_users=dataset.n_users, n_items=dataset.n_items, ratings=test_ratings
-        )
+        train = InteractionDataset(n_users=dataset.n_users, n_items=dataset.n_items, ratings=train_ratings)
+        test = InteractionDataset(n_users=dataset.n_users, n_items=dataset.n_items, ratings=test_ratings)
         return SplitResult(train=train, test=test, test_heldout=heldout)
 
 
